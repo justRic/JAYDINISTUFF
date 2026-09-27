@@ -395,6 +395,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 16px;
+      box-sizing: border-box;
       background: linear-gradient(180deg, #070012 0%, #0e0020 45%, #16002e 100%);
       background-attachment: fixed;
       transition: opacity 0.4s ease, visibility 0.4s;
@@ -405,96 +407,84 @@
       pointer-events: none;
     }
     .gate-card {
-      background: rgba(20, 10, 36, 0.94);
-      border: 1.5px solid rgba(192, 132, 252, 0.35);
-      border-radius: 24px;
-      padding: 2.4rem 2rem;
+      background: #1c1c1e;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      padding: clamp(0.7rem, 3.5vw, 1.1rem);
       width: 100%;
-      max-width: 380px;
-      text-align: center;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 40px rgba(168,85,247,0.15), 0 0 0 1px rgba(192,132,252,0.1);
-      backdrop-filter: blur(16px);
+      max-width: min(92vw, 340px);
+      box-sizing: border-box;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
       animation: gateIn 0.45s cubic-bezier(.34,1.56,.64,1);
     }
     @keyframes gateIn {
       from { transform: scale(0.9) translateY(20px); opacity: 0; }
       to { transform: scale(1) translateY(0); opacity: 1; }
     }
-    .gate-card h1 {
-      font-family: 'Syne', sans-serif;
-      font-size: 1.7rem;
-      font-weight: 800;
-      color: #e9d5ff;
-      margin-bottom: 0.35rem;
-      letter-spacing: -0.02em;
-      text-shadow: 0 0 24px rgba(192,132,252,0.5);
-    }
-    .gate-card .sub {
-      color: #a78bfa;
-      font-size: 0.95rem;
-      margin-bottom: 1.6rem;
-      font-weight: 500;
-    }
-    .gate-card input {
-      width: 100%;
-      padding: 0.9rem 1.1rem;
-      border: 2px solid rgba(192,132,252,0.3);
-      border-radius: 14px;
-      background: #0f061c;
-      color: #f3e8ff;
-      font-size: 1.25rem;
-      letter-spacing: 0.45em;
-      text-align: center;
-      outline: none;
-      margin-bottom: 1rem;
-      font-family: 'DM Sans', sans-serif;
-      transition: border-color 0.25s, box-shadow 0.25s;
-    }
-    .gate-card input:focus {
-      border-color: #c084fc;
-      box-shadow: 0 0 0 4px rgba(192,132,252,0.2);
-    }
-    .gate-card input::placeholder {
-      letter-spacing: 0.2em;
-      color: #6b4f8a;
-    }
-    .gate-card button {
-      width: 100%;
-      padding: 0.9rem;
-      border: none;
-      border-radius: 14px;
-      background: linear-gradient(100deg, #7c3aed, #a855f7, #c026d3);
+    .calc-display {
       color: #fff;
-      font-size: 1.05rem;
-      font-weight: 700;
       font-family: 'DM Sans', sans-serif;
+      font-size: clamp(1.8rem, 9vw, 3rem);
+      font-weight: 300;
+      text-align: right;
+      padding: clamp(0.8rem, 4vw, 1.6rem) 0.5rem 0.8rem;
+      min-height: clamp(3rem, 12vw, 4.4rem);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      letter-spacing: -0.01em;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(0.4rem, 2vw, 0.6rem);
+      width: 100%;
+    }
+    .calc-btn {
+      /* min-width/min-height: 0 overrides the browser's default intrinsic
+         sizing for <button> elements, which is what was forcing the grid
+         columns wider than the card on Safari/iOS/mobile. */
+      appearance: none;
+      -webkit-appearance: none;
+      min-width: 0;
+      min-height: 0;
+      width: 100%;
+      aspect-ratio: 1;
+      border: none;
+      border-radius: 50%;
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(0.9rem, 4.2vw, 1.4rem);
+      font-weight: 500;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 22px rgba(168,85,247,0.4);
+      background: #333336;
+      color: #fff;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: filter 0.15s, transform 0.1s;
     }
-    .gate-card button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(168,85,247,0.55);
+    .calc-btn:active { transform: scale(0.94); filter: brightness(1.3); }
+    .calc-btn.op {
+      background: #ff9f0a;
+      color: #fff;
+      font-size: clamp(1rem, 4.6vw, 1.6rem);
     }
-    .gate-card button:active {
-      transform: translateY(0);
+    .calc-btn.fn {
+      background: #a5a5a5;
+      color: #1c1c1e;
     }
-    .gate-error {
-      color: #f472b6;
-      font-size: 1.15rem;
-      font-weight: 800;
-      font-family: 'Syne', sans-serif;
-      letter-spacing: 0.2em;
-      margin-top: 1rem;
-      min-height: 1.4em;
-      opacity: 0;
-      transition: opacity 0.2s;
-      text-shadow: 0 0 16px rgba(244,114,182,0.5);
+    .calc-btn.zero {
+      grid-column: span 2;
+      width: 100%;
+      aspect-ratio: unset;
+      border-radius: 999px;
+      justify-content: flex-start;
+      padding-left: clamp(1rem, 6vw, 1.6rem);
     }
-    .gate-error.show {
-      opacity: 1;
-    }
-
   </style>
   <link rel="manifest" href="https://cdn.jsdelivr.net/gh/freebuisness/gn-math-DONTDMCA@main/manifest.json">
   <meta name="theme-color" content="#7c3aed">
@@ -502,16 +492,35 @@
 
 <body class="dark">
 
-<!-- CODE GATE -->
+<!-- CODE GATE (calculator skin) -->
 <div id="codeGate">
   <div class="gate-card">
-    <h1>Enter Code</h1>
-    <p class="sub">Access required</p>
-    <form id="codeForm" onsubmit="return checkCode(event)">
-      <input type="password" id="codeInput" placeholder="••••" maxlength="8" autocomplete="off" autofocus>
-      <button type="submit">Unlock</button>
-      <div class="gate-error" id="gateError">WRONG</div>
-    </form>
+    <div class="calc-display" id="calcDisplay">0</div>
+    <div class="calc-grid">
+      <button type="button" class="calc-btn fn" onclick="calcClear()">AC</button>
+      <button type="button" class="calc-btn fn" onclick="calcSign()">+/-</button>
+      <button type="button" class="calc-btn fn" onclick="calcPercent()">%</button>
+      <button type="button" class="calc-btn op" onclick="calcOp('÷')">÷</button>
+
+      <button type="button" class="calc-btn" onclick="calcDigit('7')">7</button>
+      <button type="button" class="calc-btn" onclick="calcDigit('8')">8</button>
+      <button type="button" class="calc-btn" onclick="calcDigit('9')">9</button>
+      <button type="button" class="calc-btn op" onclick="calcOp('×')">×</button>
+
+      <button type="button" class="calc-btn" onclick="calcDigit('4')">4</button>
+      <button type="button" class="calc-btn" onclick="calcDigit('5')">5</button>
+      <button type="button" class="calc-btn" onclick="calcDigit('6')">6</button>
+      <button type="button" class="calc-btn op" onclick="calcOp('−')">−</button>
+
+      <button type="button" class="calc-btn" onclick="calcDigit('1')">1</button>
+      <button type="button" class="calc-btn" onclick="calcDigit('2')">2</button>
+      <button type="button" class="calc-btn" onclick="calcDigit('3')">3</button>
+      <button type="button" class="calc-btn op" onclick="calcOp('+')">+</button>
+
+      <button type="button" class="calc-btn zero" onclick="calcDigit('0')">0</button>
+      <button type="button" class="calc-btn" onclick="calcDigit('.')">.</button>
+      <button type="button" class="calc-btn op" onclick="calcEquals()">=</button>
+    </div>
   </div>
 </div>
 
@@ -702,7 +711,7 @@ async function listZones(){
     const response = await fetch(zonesURL+"?t="+Date.now());
     const json = await response.json();
     zones = json;
-    zones[0].featured = true;
+    if(zones.length) zones[0].featured = true;
     await Promise.all([fetchPopularity("year"),fetchPopularity("month"),fetchPopularity("week"),fetchPopularity("day")]);
     sortZones();
 
@@ -777,10 +786,10 @@ function sortZones(){
 function makeCard(file){
   const item=document.createElement('div'); item.className='zone-item'; item.onclick=()=>openZone(file);
   const img=document.createElement('img');
-  img.dataset.src=file.cover.replace("{COVER_URL}",coverURL).replace("{HTML_URL}",htmlURL);
-  img.alt=file.name; img.loading='lazy'; img.className='lazy-zone-img';
+  img.dataset.src=(file.cover||'').replace("{COVER_URL}",coverURL).replace("{HTML_URL}",htmlURL);
+  img.alt=file.name||''; img.loading='lazy'; img.className='lazy-zone-img';
   item.appendChild(img);
-  const btn=document.createElement('button'); btn.textContent=file.name;
+  const btn=document.createElement('button'); btn.textContent=file.name||'Untitled';
   btn.onclick=e=>{e.stopPropagation();openZone(file);};
   item.appendChild(btn);
   return item;
@@ -1031,10 +1040,10 @@ let _allStatsCache=null;
 async function getAllStats(){
   if(_allStatsCache) return _allStatsCache;
   const BASE_URL="https://data.jsdelivr.com/v1/stats/packages/gh/freebuisness/html@main/files";
-  const PERIOD="year"; const PAGE_BATCH=5;
+  const PERIOD="year"; const PAGE_BATCH=5; const MAX_PAGES=500; // safety cap so a misbehaving API can't loop forever
   let page=1, done=false;
   const combinedMap=Object.create(null);
-  while(!done){
+  while(!done && page<=MAX_PAGES){
     const pages=Array.from({length:PAGE_BATCH},(_,i)=>page+i);
     const responses=await Promise.all(pages.map(p=>fetch(`${BASE_URL}?period=${PERIOD}&page=${p}&limit=100`).then(r=>r.ok?r.json():[])));
     for(const data of responses){
@@ -1068,6 +1077,10 @@ function showZoneInfo(){
       const stats=await getStats(id);
       const zone=zones.find(a=>a.id===id);
       if(!zone){body.innerHTML=`<p style="color:var(--primary)">Zone not found.</p>`;return;}
+      if(!Array.isArray(json)||json.length===0){
+        body.innerHTML=`<p style="color:var(--primary)">Couldn't load commit history for this zone.</p>`;
+        return;
+      }
       document.getElementById('popupTitle').textContent=`${zone.name} Info`;
       const date=new Date(json.at(-1).commit.author.date);
       const fmt=new Intl.DateTimeFormat("en-US",{month:"long",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit",hour12:true}).format(date);
@@ -1161,18 +1174,16 @@ async function loadData(event){
 HTMLCanvasElement.prototype.toDataURL=function(...args){return '';};
 
 
-// ── Code Gate ──
+// ── Code Gate (disguised as a real calculator) ──
 (function(){
   const GATE_KEY = 'jaydinistuff-unlocked-v2';
   const CORRECT = '6767';
   const gate = document.getElementById('codeGate');
-  const errEl = document.getElementById('gateError');
-  const input = document.getElementById('codeInput');
+  const display = document.getElementById('calcDisplay');
 
   // Cookie helpers — used as a fallback so the unlock survives even when
   // localStorage isn't available/persisted (private browsing, embedded
-  // iframes, storage partitioning, etc). This is what was causing the
-  // gate to reset after leaving the site.
+  // iframes, storage partitioning, etc).
   function setCookie(name, value, days) {
     try {
       const expires = new Date(Date.now() + days*24*60*60*1000).toUTCString();
@@ -1195,32 +1206,84 @@ HTMLCanvasElement.prototype.toDataURL=function(...args){return '';};
     setCookie(GATE_KEY, '1', 365);
   }
 
-  // Already unlocked?
   if (isUnlocked()) {
     gate.classList.add('hidden');
-    // Repair storage in case only one of the two stores had it (e.g. the
-    // cookie survived but localStorage got cleared, or vice versa).
-    persistUnlock();
+    persistUnlock(); // repair whichever store might be missing it
     return;
   }
 
-  window.checkCode = function(e) {
-    e.preventDefault();
-    const val = input.value.trim();
-    if (val === CORRECT) {
+  // ---- real calculator state/logic ----
+  let current = '0';   // value currently being typed/shown
+  let stored = null;   // left-hand operand
+  let pendingOp = null;
+  let justEvaluated = false;
+
+  function render(){ display.textContent = current; }
+
+  function applyOp(a, op, b){
+    switch(op){
+      case '+': return a + b;
+      case '−': return a - b;
+      case '×': return a * b;
+      case '÷': return b === 0 ? 0 : a / b;
+    }
+  }
+
+  window.calcDigit = function(d){
+    if (justEvaluated) { current = '0'; justEvaluated = false; }
+    if (d === '.' && current.includes('.')) return;
+    current = (current === '0' && d !== '.') ? d : current + d;
+    render();
+  };
+
+  window.calcClear = function(){
+    current = '0'; stored = null; pendingOp = null; justEvaluated = false;
+    render();
+  };
+
+  window.calcSign = function(){
+    if (current === '0') return;
+    current = current.startsWith('-') ? current.slice(1) : '-' + current;
+    render();
+  };
+
+  window.calcPercent = function(){
+    current = String(parseFloat(current) / 100);
+    render();
+  };
+
+  window.calcOp = function(op){
+    if (pendingOp && !justEvaluated) {
+      stored = applyOp(stored, pendingOp, parseFloat(current));
+      current = String(stored);
+    } else {
+      stored = parseFloat(current);
+    }
+    pendingOp = op;
+    justEvaluated = false;
+    current = '0';
+    render();
+  };
+
+  window.calcEquals = function(){
+    // The code check happens on the raw number as typed, before any
+    // operator has combined it with anything else.
+    if (!pendingOp && stored === null && current.trim() === CORRECT) {
       persistUnlock();
       gate.classList.add('hidden');
-      // Clear any residual focus
-      input.blur();
-    } else {
-      errEl.classList.add('show');
-      input.value = '';
-      input.focus();
-      // Auto-hide error after a moment
-      setTimeout(() => errEl.classList.remove('show'), 1800);
+      return;
     }
-    return false;
+
+    if (pendingOp !== null) {
+      stored = applyOp(stored, pendingOp, parseFloat(current));
+      current = String(stored);
+      pendingOp = null;
+    }
+    justEvaluated = true;
+    render();
   };
+
+  render();
 })();
 
 listZones();
